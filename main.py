@@ -4,8 +4,10 @@ import os
 import sys
 from pathlib import Path
 
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
 
+import runtime
 from ui import DARK_QSS, MainWindow
 
 SYSTEM_SCHEMA_DIR = "/usr/share/glib-2.0/schemas"
@@ -50,8 +52,19 @@ def _repair_gsettings_env() -> None:
 
 def main() -> None:
     _repair_gsettings_env()
+    runtime.setup_environment()
+
     app = QApplication(sys.argv)
+    app.setOrganizationName("You-T")
     app.setApplicationName("You-T")
+    app.setApplicationDisplayName("You-T")
+    app.setApplicationVersion(runtime.app_version())
+    app.setDesktopFileName("you-t")
+
+    icon = runtime.icon_path()
+    if icon:
+        app.setWindowIcon(QIcon(str(icon)))
+
     app.setStyle("Fusion")
     app.setStyleSheet(DARK_QSS)
     window = MainWindow()

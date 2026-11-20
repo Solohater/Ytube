@@ -23,3 +23,5 @@ dist/
 *.mkv
 *.part
 *.ytdl
+.cache/
+vendor/ffmpeg/
